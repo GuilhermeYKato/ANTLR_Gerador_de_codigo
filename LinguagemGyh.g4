@@ -217,26 +217,35 @@ subAlgoritmo:
 
 
 expressaoAritmetica: 
-	termoAritmetico  expressaoAritmetica2 | termoAritmetico;
-
-expressaoAritmetica2: 
+	termoAritmetico  
 	('+' {_expContent+= " + ";}
-		termoAritmetico expressaoAritmetica2 
+	termoAritmetico  
 	| '-' {_expContent+= " - ";}
-	 termoAritmetico expressaoAritmetica2)*;
+	 termoAritmetico )? 
+	 | termoAritmetico;
+
+
 
 termoAritmetico: 
-	fatorAritmetico  termoAritmetico2 
+	fatorAritmetico  
+	('*' 
+	{
+		_expContent+=_input.LT(-1).getText();
+		System.out.println(_input.LT(-1).getText());
+	}
+	fatorAritmetico  
+	| '/' 
+	{
+		_expContent+= _input.LT(-1).getText();
+		System.out.println(_input.LT(-1).getText());
+	}
+	fatorAritmetico)
 	| fatorAritmetico;
 
-termoAritmetico2: 
-	('*' {_expContent+= " * ";}
-		fatorAritmetico  termoAritmetico2 
-	| '/' {_expContent+= " / ";}
-	fatorAritmetico  termoAritmetico2)*;
+
 
 fatorAritmetico: 
-	NumInt 		
+	(NumInt	
 	{ 
 		// Gerador de codigo
 		_expContent+= _input.LT(-1).getText();
@@ -259,9 +268,9 @@ fatorAritmetico:
 	{
 		// Sintatico
 		VerificarVar(_input.LT(-1).getText());
-	}
+	})*
 	| 
-	'('  {_expContent= " ( ";}
+	'('  {_expContent+= " ( ";}
 	expressaoAritmetica
 	 ')' {_expContent+= " ) ";}
 	 ;
