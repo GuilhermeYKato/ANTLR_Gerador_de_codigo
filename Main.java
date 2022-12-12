@@ -14,15 +14,8 @@ class Main {
 	public static void main(String[] args) {
 		try {
 
-			/*
-			 * HashMap <Integer, String> carro = new HashMap<Integer,String>(); carro.put(4,
-			 * "GOl"); carro.put(2, "Fusca"); carro.put(1, "Variant"); carro.put(3,
-			 * "Brasilia"); carro.put(5, "Opala"); carro.put(7, "Padoan");
-			 * 
-			 * for(String c: carro.values()) { System.out.println("Carro = " + c); }
-			 */
 
-			CharStream cs = CharStreams.fromFileName("prog2.gyh");
+			CharStream cs = CharStreams.fromFileName("ErroLexico\\programa2.gyh");
 			LinguagemGyhLexer lexer = new LinguagemGyhLexer(cs);
 			CommonTokenStream token = new CommonTokenStream(lexer);
 			LinguagemGyhParser parser = new LinguagemGyhParser(token);
@@ -30,13 +23,13 @@ class Main {
 			
 			parser.generateCommand();
 			
-			/*
-			 * Token t;
-			 * 
-			 * while((t=lexer.nextToken()).getType() != Token.EOF ){ System.out.println("<"+
-			 * t.getText()+", "+LinguagemGyhParser.VOCABULARY.getSymbolicName(t.getType())+
-			 * ">"); }
-			 */
+			
+			  Token t;
+			 
+			  while((t=lexer.nextToken()).getType() != Token.EOF ){ System.out.println("<"+
+			  t.getText()+", "+LinguagemGyhParser.VOCABULARY.getSymbolicName(t.getType())+
+			  ">"); }
+			 
 		} 
 		catch (SemanticException ex) {
 			System.err.println("Erro Semantico, " + ex.getMessage());
